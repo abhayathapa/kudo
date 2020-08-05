@@ -5,9 +5,9 @@
       <div class="card-header">
         <h4>List of Stand Ups</h4>
         <div class="card-header-action">
-          <%= link_to icon('fas fa-plus', 'New'), new_stand_up_path, class: 'btn btn-icon icon-left btn-primary' %>
-          <%= link_to icon('fas fa-download', 'Export Data'), stand_ups_path(format: :csv, q: request.params[:q]), class: 'dropdown-item has-icon' %>
-          <%= link_to icon('fas fa-print', 'Print Page'), 'javascript:window.print()', class: 'dropdown-item has-icon' %>
+          <%= link_to icon('fas fa-plus', 'New'), new_stand_up_path, class: 'btn btn-icon icon-left' %>
+          <%= link_to icon('fas fa-download', 'Export Data'), stand_ups_path(format: :csv, q: request.params[:q]), class: 'd-inline has-icon float-right pl-3' %> 
+            <%= link_to icon('fas fa-print', 'Print Page'), 'javascript:window.print()', class: 'd-inline has-icon float-right' %>
         </div>
       </div>
       <div class="card-body" data-controller="infinite-page">
