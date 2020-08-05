@@ -5,6 +5,7 @@ class StandUpsController < ApplicationController
   # GET /stand_ups.json
   def index
     @stand_ups = StandUp.all
+    @search = StandUp.all.ransack(params[:q])
   end
 
   # GET /stand_ups/1
@@ -69,6 +70,6 @@ class StandUpsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def stand_up_params
-      params.fetch(:stand_up, {})
+      params.fetch(:stand_up, {}).permit(:name, :hours, :info, :user_id)
     end
 end

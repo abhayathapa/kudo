@@ -1,25 +1,55 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Stand Ups</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @stand_ups.each do |stand_up| %>
-      <tr>
-        <td><%= link_to 'Show', stand_up %></td>
-        <td><%= link_to 'Edit', edit_stand_up_path(stand_up) %></td>
-        <td><%= link_to 'Destroy', stand_up, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
+<div class="section-body">
+    <div class="card">
+      <div class="card-header">
+        <h4>List of Stand Ups</h4>
+        <div class="card-header-action">
+          <%= link_to icon('fas fa-plus', 'New'), new_stand_up_path, class: 'btn btn-icon icon-left btn-primary' %>
+          <%= link_to icon('fas fa-download', 'Export Data'), stand_ups_path(format: :csv, q: request.params[:q]), class: 'dropdown-item has-icon' %>
+          <%= link_to icon('fas fa-print', 'Print Page'), 'javascript:window.print()', class: 'dropdown-item has-icon' %>
+        </div>
+      </div>
+      <div class="card-body" data-controller="infinite-page">
+        <%= search_form_for @search, remote: true, data: { controller: 'turbolinks-form' }, html: { class: 'form-row' } do |f| %>
+          <div class="form-group col-sm-10">
+            <%= f.text_field :name_cont, class: 'form-control m-input m-input--solid', placeholder: 'Name' %>
+          </div>
+          <div class="form-group col-sm-2 text-right">
+            <%= f.button 'Search', name: nil, class: 'btn btn-icon icon-left btn-primary' %>
+          </div>
+        <% end %>
+        <div class="table-responsive">
+          <table class="table table-striped table-md">
+            <thead>
+              <tr>
+                <th><%= sort_link_turbo(@search, :name) %></th>
+                <th><%= sort_link_turbo(@search, :hours) %></th>
+                <th><%= sort_link_turbo(@search, :user) %></th>
+                <th><%= sort_link_turbo(@search, :info) %></th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody data-target="infinite-page.container">
+              <% @stand_ups.each do |stand_up| %>
+                <tr data-target="infinite-page.item">
+                  <td><%= stand_up.name %></td>
+                  <td><%= stand_up.hours %></td>
+                  <td><%= stand_up.user.first_name %></td>
+                  <td><%= stand_up.info %></td>
+                  <td>
+                    <%= link_to icon('fas fa-eye'), stand_up, title: 'Show it', class: 'btn btn-icon btn-sm btn-info mr-1' %>
+                    <%= link_to icon('fas fa-edit'), edit_stand_up_path(stand_up), title: 'Edit it', class: 'btn btn-icon btn-sm btn-warning mr-1' %>
+                    <%= link_to icon('fas fa-trash'), stand_up, title: 'Destroy it', class: 'btn btn-icon btn-sm btn-danger', method: :delete, data: { confirm: 'Are you sure?', remote: true } %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+          <%# link_to 'Next page', stand_ups_path(page: @page.next_number, q: request.params[:q]), data: { target: 'infinite-page.more' } unless @page.last? %>
+        </div>
+      </div>
+    </div>
+  </div>
 
 <%= link_to 'New Stand Up', new_stand_up_path %>
