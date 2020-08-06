@@ -1,11 +1,12 @@
 class StandUpsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_stand_up, only: [:show, :edit, :update, :destroy]
 
   # GET /stand_ups
   # GET /stand_ups.json
   def index
     @stand_up = StandUp.new
-    @search = StandUp.includes(:user).ransack(params[:q])
+    @search = StandUp.includes(:user).order('created_at DESC').ransack(params[:q])
     @stand_ups = @search.result.page(params[:page])
 
     respond_to do |format|
@@ -35,8 +36,7 @@ class StandUpsController < ApplicationController
 
     respond_to do |format|
       if @stand_up.save
-        format.html { redirect_to @stand_up, notice: 'Stand up was successfully created.' }
-        format.json { render :show, status: :created, location: @stand_up }
+        format.any(:html, :js) { redirect_to stand_ups_url, status: :created, notice: 'Stand up was successfully created.' }
       else
         format.html { render :new }
         format.json { render json: @stand_up.errors, status: :unprocessable_entity }

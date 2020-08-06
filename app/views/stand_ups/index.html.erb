@@ -6,7 +6,7 @@
 <div class="section-body">
     <div class="card">
       <div class="card-header">
-        <h4>List of Stand Ups</h4>
+        <h4>Daily Standups List</h4>
         <div class="card-header-action">
           <%= link_to icon('fas fa-plus', 'New'), new_stand_up_path, class: 'btn btn-icon icon-left' %>
           <%= link_to icon('fas fa-download', 'Export CSV'), stand_ups_path(format: :csv, q: request.params[:q]), class: 'd-inline has-icon float-right pl-3' %> 
@@ -33,6 +33,7 @@
                 <th><%= sort_link(@search, :name) %></th>
                 <th><%= sort_link(@search, :hours) %></th>
                 <th><%= sort_link(@search, :user) %></th>
+                <th><%= sort_link(@search, :created_at) %></th>
                 <th>Info</th>
                 <th>Actions</th>
               </tr>
@@ -42,8 +43,9 @@
                 <tr>
                   <td><%= stand_up.name %></td>
                   <td><%= stand_up.hours %></td>
-                  <td><%= stand_up.user.first_name %></td>
-                  <td style='width:50%'><%= stand_up.info %></td>
+                  <td><%= stand_up.user %></td>
+                  <td><%= stand_up.date %></td>
+                  <td style='width:40%'><%= stand_up.info %></td>
                   <td>
                     <%= link_to icon('fas fa-eye'), stand_up, title: 'Show it', class: 'btn btn-icon btn-sm btn-info mr-1' %>
                     <%= link_to icon('fas fa-edit'), edit_stand_up_path(stand_up), title: 'Edit it', class: 'btn btn-icon btn-sm btn-warning mr-1' %>
