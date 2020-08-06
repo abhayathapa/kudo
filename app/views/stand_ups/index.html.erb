@@ -1,5 +1,8 @@
 <p id="notice"><%= notice %></p>
 
+<% unless current_user.admin? %>
+  <%= render 'form', stand_up: @stand_up %>
+<% end %>
 <div class="section-body">
     <div class="card">
       <div class="card-header">
@@ -36,7 +39,7 @@
                   <td><%= stand_up.name %></td>
                   <td><%= stand_up.hours %></td>
                   <td><%= stand_up.user.first_name %></td>
-                  <td><%= stand_up.info %></td>
+                  <td style='width:50%'><%= stand_up.info %></td>
                   <td>
                     <%= link_to icon('fas fa-eye'), stand_up, title: 'Show it', class: 'btn btn-icon btn-sm btn-info mr-1' %>
                     <%= link_to icon('fas fa-edit'), edit_stand_up_path(stand_up), title: 'Edit it', class: 'btn btn-icon btn-sm btn-warning mr-1' %>
@@ -51,5 +54,3 @@
       </div>
     </div>
   </div>
-
-<%= link_to 'New Stand Up', new_stand_up_path %>

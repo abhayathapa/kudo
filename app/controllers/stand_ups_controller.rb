@@ -4,6 +4,7 @@ class StandUpsController < ApplicationController
   # GET /stand_ups
   # GET /stand_ups.json
   def index
+    @stand_up = StandUp.new
     @stand_ups = StandUp.all
     @search = StandUp.all.ransack(params[:q])
   end

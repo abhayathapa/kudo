@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 2020_08_05_152257) do
 
   create_table "stand_ups", force: :cascade do |t|
     t.string "name", null: false
-    t.string "hours", null: false
+    t.float "hours", null: false
     t.text "info"
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
