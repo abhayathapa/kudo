@@ -5,12 +5,12 @@ class StandUpsController < ApplicationController
   # GET /stand_ups.json
   def index
     @stand_up = StandUp.new
-    @search = StandUp.ransack(params[:q])
+    @search = StandUp.includes(:user).ransack(params[:q])
     @stand_ups = @search.result.page(params[:page])
 
     respond_to do |format|
       format.any(:html, :json) { @stand_ups }
-      format.csv { render csv: @search.result }
+      format.csv { send_data StandUp.to_csv(@search.result), filename: "logs-#{Date.today}.csv" }
     end
   end
 
