@@ -6,6 +6,10 @@ class StandUp < ApplicationRecord
   def date
     created_at.strftime('%A, %b %d')
   end
+
+  def editable?(current_user)
+    user == current_user && created_at.to_date == Date.today
+  end
   
 
   def self.to_csv(records)

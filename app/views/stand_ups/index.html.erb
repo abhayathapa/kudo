@@ -52,7 +52,7 @@
                   <td style='width:40%'><%= stand_up.info %></td>
                   <td>
                     <%= link_to icon('fas fa-eye'), stand_up, title: 'Show it', class: 'btn btn-icon btn-sm btn-info mr-1' %>
-                    <%= link_to icon('fas fa-edit'), edit_stand_up_path(stand_up), title: 'Edit it', class: 'btn btn-icon btn-sm btn-warning mr-1' %>
+                    <%= link_to icon('fas fa-edit'), edit_stand_up_path(stand_up), title: 'Edit it', class: 'btn btn-icon btn-sm btn-warning mr-1' if stand_up.editable?(current_user) %>
                     <%= link_to icon('fas fa-trash'), stand_up, title: 'Destroy it', class: 'btn btn-icon btn-sm btn-danger', method: :delete, data: { confirm: 'Are you sure?', remote: true } %>
                   </td>
                 </tr>

@@ -27,6 +27,9 @@ class StandUpsController < ApplicationController
 
   # GET /stand_ups/1/edit
   def edit
+    unless @stand_up.editable?(current_user)
+      redirect_to stand_ups_url, notice: 'Edit not allowed' 
+    end
   end
 
   # POST /stand_ups
