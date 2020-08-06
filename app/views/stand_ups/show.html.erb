@@ -1,4 +1,28 @@
 <p id="notice"><%= notice %></p>
+<section class="section">
+
+  <div class="section-body">
+    <div class="card">
+      <div class="card-header">
+        <h4>Show Standup -  <%= @stand_up.id %></h4>
+      </div>
+      <div class="card-body">
+        <dl class="row">
+          <dt class="col-sm-3">Name:</dt>
+          <dd class="col-sm-9"><%= @stand_up.name %></dd>
+          <dt class="col-sm-3">Hours:</dt>
+          <dd class="col-sm-9"><%= @stand_up.hours %></dd>
+          <dt class="col-sm-3">User:</dt>
+          <dd class="col-sm-9"><%= @stand_up.user %></dd>
+          <dt class="col-sm-3">Date:</dt>
+          <dd class="col-sm-9"><%= @stand_up.date %></dd>
+          <dt class="col-sm-3">Info:</dt>
+          <dd class="col-sm-9"><%= @stand_up.info %></dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
 
 <%= link_to 'Edit', edit_stand_up_path(@stand_up) %> |
 <%= link_to 'Back', stand_ups_path %>
