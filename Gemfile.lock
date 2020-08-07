@@ -1,13 +1,15 @@
 GIT
   remote: https://github.com/rspec/rspec-core.git
-  revision: e7c5d030966a7e8dad3e0a67c61920c4f2437c15
+  revision: eaaca6dd2420f6afd8e0cbcde93acb9c0f12692a
+  branch: main
   specs:
     rspec-core (3.10.0.pre)
       rspec-support (= 3.10.0.pre)
 
 GIT
   remote: https://github.com/rspec/rspec-expectations.git
-  revision: e63ff4765e1cd2798b02ddddad259f1104ef87a5
+  revision: 3c7189e5b9150aa18e430e73e6b5e2c1ef3d6b64
+  branch: main
   specs:
     rspec-expectations (3.10.0.pre)
       diff-lcs (>= 1.2.0, < 2.0)
@@ -15,7 +17,8 @@ GIT
 
 GIT
   remote: https://github.com/rspec/rspec-mocks.git
-  revision: 0a52e0a86b126b4bab94d277b2ad99a7492dc37d
+  revision: 3c8ee9d8a314579ac83c3a14d01971e02e66bb5f
+  branch: main
   specs:
     rspec-mocks (3.10.0.pre)
       diff-lcs (>= 1.2.0, < 2.0)
@@ -23,7 +26,8 @@ GIT
 
 GIT
   remote: https://github.com/rspec/rspec-rails.git
-  revision: 01704c50c146f720db914724c25681781ecefb23
+  revision: 067b5711ed4ac56f01b904ae71176d6f1edda35e
+  branch: main
   specs:
     rspec-rails (4.1.0.pre)
       actionpack (>= 4.2)
@@ -36,7 +40,8 @@ GIT
 
 GIT
   remote: https://github.com/rspec/rspec-support.git
-  revision: 6447b0c2c9d1cd3e1504784fb85675ca9ae7b7c3
+  revision: a695d21c3962790f4375b84bc4cc98c6fb0b6e92
+  branch: main
   specs:
     rspec-support (3.10.0.pre)
 
@@ -119,6 +124,7 @@ GEM
     coderay (1.1.3)
     concurrent-ruby (1.1.6)
     crass (1.0.6)
+    database_cleaner (1.8.3)
     devise (4.7.2)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -127,6 +133,11 @@ GEM
       warden (~> 1.2.3)
     diff-lcs (1.4.4)
     erubi (1.9.0)
+    factory_bot (5.1.2)
+      activesupport (>= 4.2.0)
+    factory_bot_rails (5.1.1)
+      factory_bot (~> 5.1.0)
+      railties (>= 4.2.0)
     ffi (1.13.1)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
@@ -274,7 +285,9 @@ DEPENDENCIES
   bootsnap (>= 1.4.2)
   byebug
   capybara (>= 2.15)
+  database_cleaner
   devise
+  factory_bot_rails
   jbuilder (~> 2.7)
   listen (~> 3.2)
   pg (>= 0.18, < 2.0)
