@@ -42,7 +42,8 @@ class StandUpsController < ApplicationController
       if @stand_up.save
         format.any(:html, :js) { redirect_to stand_ups_url, status: :created, notice: 'Stand up was successfully created.' }
       else
-        format.html { render :new }
+        flash[:alert] = @stand_up.errors.full_messages.join(',')
+        format.html { redirect_to stand_ups_path }
         format.json { render json: @stand_up.errors, status: :unprocessable_entity }
       end
     end

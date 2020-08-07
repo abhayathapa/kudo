@@ -13,6 +13,11 @@
   <div class="main-wrapper main-wrapper-1">
     <div class="navbar-bg"></div>
     <%= render 'shared/navbar' %>
+    <% flash.each do |type, msg| %>
+      <div class="alert alert-info">
+        <%= msg %>
+      </div>
+    <% end %>
     <div class="main-content">
       <%= yield %>
     </div>

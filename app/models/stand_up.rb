@@ -3,6 +3,8 @@ class StandUp < ApplicationRecord
 
   self.per_page = 5
 
+  validates_presence_of :name, :hours
+
   def date
     created_at.strftime('%A, %b %d')
   end
