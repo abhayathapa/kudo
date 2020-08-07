@@ -9,6 +9,8 @@ class StandUp < ApplicationRecord
     created_at.strftime('%A, %b %d')
   end
 
+  # @return [Boolean]
+  # Check if record is editable by current_user and current date
   def editable?(current_user)
     user == current_user && created_at.to_date == Date.today
   end

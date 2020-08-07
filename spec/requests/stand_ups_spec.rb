@@ -16,45 +16,67 @@ RSpec.describe "/stand_ups", type: :request do
   # StandUp. As you add validations to StandUp, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    user = create(:user)
+    {name: 'Optimization', hours: 2.5, info: 'Lorem ipsum dolor sit amet', user_id: user.id  } 
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {name: 'Optimization',  info: 'Lorem ipsum dolor sit amet'}
   }
 
-  describe "GET /index" do
-    it "renders a successful response" do
-      StandUp.create! valid_attributes
-      get stand_ups_url
+  describe "Filter by name and info" do
+    before do
+      user = create(:user)
+      5.times do 
+        create(:stand_up, user: user)
+      end
+      create(:stand_up, name: 'Rspec', user: user)
+      # create(:stand_up, name: 'Rspec', user: user)
+      sign_in user
+    end
+    it "Filter by name" do
+      get stand_ups_url, params: {q: {name_cont: 'Rspec'}}
+      # JSON.parse(response.body)
+      expect(response.body).to include("<td>Rspec</td>")
       expect(response).to be_successful
+    end
+  end
+
+  describe "GET /index" do
+    before do
+      5.times do 
+        create(:stand_up)
+      end
+      sign_in User.last
+    end
+    it "renders a successful response" do
+      get stand_ups_url
+      expect(response).to have_http_status(200)
     end
   end
 
   describe "GET /show" do
     it "renders a successful response" do
-      stand_up = StandUp.create! valid_attributes
+      stand_up = create(:stand_up)
+      sign_in stand_up.user
       get stand_up_url(stand_up)
-      expect(response).to be_successful
-    end
-  end
-
-  describe "GET /new" do
-    it "renders a successful response" do
-      get new_stand_up_url
       expect(response).to be_successful
     end
   end
 
   describe "GET /edit" do
     it "render a successful response" do
-      stand_up = StandUp.create! valid_attributes
+      stand_up = create(:stand_up)
+      sign_in stand_up.user
       get edit_stand_up_url(stand_up)
       expect(response).to be_successful
     end
   end
 
   describe "POST /create" do
+    before :each do
+      sign_in create(:user)
+    end
     context "with valid parameters" do
       it "creates a new StandUp" do
         expect {
@@ -64,7 +86,7 @@ RSpec.describe "/stand_ups", type: :request do
 
       it "redirects to the created stand_up" do
         post stand_ups_url, params: { stand_up: valid_attributes }
-        expect(response).to redirect_to(stand_up_url(StandUp.last))
+        expect(response.location).to eq(stand_ups_url)
       end
     end
 
@@ -74,45 +96,39 @@ RSpec.describe "/stand_ups", type: :request do
           post stand_ups_url, params: { stand_up: invalid_attributes }
         }.to change(StandUp, :count).by(0)
       end
-
-      it "renders a successful response (i.e. to display the 'new' template)" do
-        post stand_ups_url, params: { stand_up: invalid_attributes }
-        expect(response).to be_successful
-      end
     end
   end
 
   describe "PATCH /update" do
+    before :each do
+      @stand_up = create(:stand_up)
+      sign_in create(:user)
+    end
     context "with valid parameters" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        {name: 'Test', hours: 4 }
       }
 
       it "updates the requested stand_up" do
-        stand_up = StandUp.create! valid_attributes
-        patch stand_up_url(stand_up), params: { stand_up: new_attributes }
-        stand_up.reload
-        skip("Add assertions for updated state")
+        # stand_up = StandUp.create! valid_attributes
+        patch stand_up_url(@stand_up), params: { stand_up: new_attributes }
+        @stand_up.reload
+        expect(@stand_up.name).to eq(new_attributes[:name])
+        expect(@stand_up.hours).to eq(new_attributes[:hours])
       end
 
       it "redirects to the stand_up" do
-        stand_up = StandUp.create! valid_attributes
-        patch stand_up_url(stand_up), params: { stand_up: new_attributes }
-        stand_up.reload
-        expect(response).to redirect_to(stand_up_url(stand_up))
-      end
-    end
-
-    context "with invalid parameters" do
-      it "renders a successful response (i.e. to display the 'edit' template)" do
-        stand_up = StandUp.create! valid_attributes
-        patch stand_up_url(stand_up), params: { stand_up: invalid_attributes }
-        expect(response).to be_successful
+        patch stand_up_url(@stand_up), params: { stand_up: new_attributes }
+        @stand_up.reload
+        expect(response).to redirect_to(stand_up_url(@stand_up))
       end
     end
   end
 
   describe "DELETE /destroy" do
+    before :each do
+      sign_in create(:user)
+    end
     it "destroys the requested stand_up" do
       stand_up = StandUp.create! valid_attributes
       expect {

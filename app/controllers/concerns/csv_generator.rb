@@ -1,4 +1,7 @@
 class CsvGenerator
+
+  # @param records{Object} 
+  # @param attributes{Array} 
   def initialize(records, attributes)
     @records = records
     @attributes = attributes
@@ -14,6 +17,8 @@ class CsvGenerator
     end
   end
 
+  # @return [String] 
+  # Returns string with attributes as header and rows containing records
   def call
     if @records.present? && @attributes.present?
       @success = true

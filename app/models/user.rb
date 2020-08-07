@@ -10,6 +10,8 @@ class User < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
+  # @return [Boolean]
+  # Check if user has submitted any stand_up today
   def has_standup_today?
     stand_ups.where(created_at: Date.today.all_day).present?
   end
