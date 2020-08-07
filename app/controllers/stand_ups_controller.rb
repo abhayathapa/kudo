@@ -8,10 +8,11 @@ class StandUpsController < ApplicationController
     @stand_up = StandUp.new
     @search = StandUp.includes(:user).order('created_at DESC').ransack(params[:q])
     @stand_ups = @search.result.page(params[:page])
+    attributes = %w{id name hours user date info}
 
     respond_to do |format|
       format.any(:html, :json) { @stand_ups }
-      format.csv { send_data StandUp.to_csv(@search.result), filename: "logs-#{Date.today}.csv" }
+      format.csv { send_data CsvGenerator.new(@search.result, attributes).call, filename: "logs-#{Date.today}.csv" }
     end
   end
 
